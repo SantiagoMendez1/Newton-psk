@@ -1,3 +1,4 @@
+import yaml
 import setup_db
 
 query_product_str = """
@@ -28,21 +29,28 @@ query_stock_str = """
 
 model_tables = {
     'stock_ia': {
-        # 'query_product': query_product_str,
+        'query_product': query_product_str,
         'query_stock': query_stock_str,
-        'query_last_update_stock':query_last_update_stock_str
+        'query_last_update_stock': query_last_update_stock_str
     },
+    'other_ia': {
+    }
 }
 
-def main(args):
-    database_name = args.get('database_name')
-    model_tables = args.get('model_ia')
-    setup_db.create_database(database_name)
-    setup_db.create_table(database_name, model_tables)
+def load_config(config_file='config.yaml'):
+    with open(config_file, 'r') as file:
+        config = yaml.safe_load(file)
+    return config
+
+def main():
+    config = load_config()
+    databases = config.get('databases', [])
+    
+    for db in databases:
+        database_name = db['name']
+        model_ia_list = db.get('models', [])
+        print(f"Creating tables for database: {database_name} with models: {model_ia_list}")
+        setup_db.create_tables(database_name, model_ia_list, model_tables)
 
 if __name__ == "__main__":
-  args = {
-        'database_name': 'TODOREPUESTOSIA2',
-        'model_ia': model_tables['stock_ia']
-    }
-  main(args)
+    main()

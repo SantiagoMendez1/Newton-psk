@@ -1,0 +1,8 @@
+databases:
+  - name: "TODOREPUESTOS2"
+    models: 
+      - "stock_ia"
+
+  - name: "OTHERDATABASE"
+    models: 
+      - "stock_ia"

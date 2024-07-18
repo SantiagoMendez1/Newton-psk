@@ -25,7 +25,7 @@ class StockMoveEtl():
         return df_stock_move
     
     def load_data(self, df):
-        engine, conn = connect_to_database("TODOREPUESTOSIA2")
+        engine, conn = connect_to_database("TODOREPUESTOS2")
         table_name="stock_move"
         update_date = datetime.now()
         try:

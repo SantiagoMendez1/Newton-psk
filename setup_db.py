@@ -23,18 +23,21 @@ def create_database(database_name):
         if conn is not None:
             conn.close()
 
-def create_table(database_name, table_to_create):
+def create_tables(database_name, model_ia_list, model_tables):
     try:
+        create_database(database_name)
         engine, conn = connect_to_database(database_name)
         if conn is None:
             return
 
-        for query in table_to_create.values():
-            conn.execute(text(query))
+        for model_name in model_ia_list:
+            model_ia = model_tables.get(model_name, {})
+            for table_name, query in model_ia.items():
+                conn.execute(text(query))
+                print(f"Tabla '{table_name}' creada correctamente en la base de datos '{database_name}'")
 
-        print("Tablas creadas correctamente")
     except Exception as e:
-        print(f"Error al intentar crear la tabla: {e}")
+        print(f"Error al intentar crear las tablas: {e}")
     finally:
         if conn is not None:
             conn.close()
