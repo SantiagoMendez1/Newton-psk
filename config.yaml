@@ -1,5 +1,5 @@
 databases:
-  - name: "TODOREPUESTOS2"
+  - name: "TODOREPUESTOS"
     models: 
       - "stock_ia"
 

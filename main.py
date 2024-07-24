@@ -1,10 +1,13 @@
-from core.stock_move.stock_move_etl import StockMoveEtl
+from projects.min_max_sm.stock_move_etl import StockMoveEtl
+from projects.min_max_sm.model.stock_move_model import StockMoveModel
 
-URL = 'http://127.0.0.1:8010/TODOREPUESTOS/search'
+DB = "TODOREPUESTOS"
 
 def main():
-    stock_move_etl = StockMoveEtl(URL)
-    stock_move_etl.run()
+    # stock_move_etl = StockMoveEtl(DB)
+    # stock_move_etl.run()
+    stock_move_model = StockMoveModel(DB)
+    stock_move_model.pre_processing()
 
 if __name__ == "__main__":
     main()
