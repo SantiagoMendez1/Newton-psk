@@ -1,11 +1,12 @@
 import tools
-import utils.db_utils as db_utils
+import utils.db_utils as db
 
 query_product_str = """
-    CREATE TABLE IF NOT EXISTS product (
+    CREATE TABLE IF NOT EXISTS product_trained (
         id SERIAL PRIMARY KEY,
+        id_product INTEGER NOT NULL UNIQUE,
         name VARCHAR(255) NOT NULL,
-        description TEXT
+        hyperparams JSONB
     )
 """
 
@@ -42,11 +43,11 @@ def main():
     config = tools.load_config()
     databases = config.get('databases', [])
     
-    for db in databases:
-        database_name = db['name']
-        model_ia_list = db.get('models', [])
-        print(f"Creating tables for database: {database_name} with models: {model_ia_list}")
-        db_utils.create_tables(database_name, model_ia_list, model_tables)
+    for database in databases:
+        database_name = database['name']
+        model_ia_list = database.get('models', [])
+        db.create_database(database_name)
+        db.create_tables(database_name, model_ia_list, model_tables)
 
 if __name__ == "__main__":
     main()

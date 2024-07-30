@@ -1,8 +1,4 @@
 databases:
-  - name: "TODOREPUESTOS"
+  - name: "TODOREP2"
     models: 
-      - "stock_ia"
-
-  - name: "OTHERDATABASE"
-    models: 
-      - "stock_ia"
+      - "stock_move_ia"

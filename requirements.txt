@@ -1,3 +1,6 @@
 requests
 pandas
 sqlalchemy
+numpy
+scikit-learn
+scikit-optimize
