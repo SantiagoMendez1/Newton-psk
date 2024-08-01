@@ -5,7 +5,8 @@ from sqlalchemy.exc import OperationalError
 def connect_to_database(database_name):
     URL_DATABASE = f'postgresql://santiago:santiago@localhost:5432/{database_name}'
     try:
-        engine = create_engine(URL_DATABASE, isolation_level="AUTOCOMMIT")
+        engine = create_engine(URL_DATABASE, 
+                               isolation_level="AUTOCOMMIT")
         conn = engine.connect()
         print(f"Conexión exitosa a la base de datos '{database_name}'")
         return engine, conn
@@ -34,7 +35,8 @@ def create_tables(database_name, model_ia_list, model_tables):
             model_ia = model_tables.get(model_name, {})
             for table_name, query in model_ia.items():
                 conn.execute(text(query))
-                print(f"Tabla '{table_name}' creada correctamente en la base de datos '{database_name}'")
+                print(f"Tabla '{table_name}' creada correctamente en \
+                        la base de datos '{database_name}'")
     except Exception as e:
         print(f"Error al intentar crear las tablas: {e}")
     finally:

@@ -2,7 +2,7 @@ import tools
 import utils.db_utils as db
 
 query_product_str = """
-    CREATE TABLE IF NOT EXISTS product_trained (
+    CREATE TABLE IF NOT EXISTS products_trained (
         id SERIAL PRIMARY KEY,
         id_product INTEGER NOT NULL UNIQUE,
         name VARCHAR(255) NOT NULL,
@@ -47,7 +47,9 @@ def main():
         database_name = database['name']
         model_ia_list = database.get('models', [])
         db.create_database(database_name)
-        db.create_tables(database_name, model_ia_list, model_tables)
+        db.create_tables(database_name, 
+                         model_ia_list, 
+                         model_tables)
 
 if __name__ == "__main__":
     main()

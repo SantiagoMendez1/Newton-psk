@@ -1,5 +1,4 @@
 import pandas as pd
-# from sqlalchemy import text
 from utils.api_utils import request_post_data
 import utils.db_utils as db
 from datetime import datetime
@@ -22,8 +21,13 @@ class StockMoveEtl():
             return None
         payload = {
                     "model": "stock.move",
-                    "domain": [("origin", "ilike", "%sale%"), ("id", ">", max_id_move)],
-                    "fields_names": ["id", "product", "effective_date", "origin", "quantity"],
+                    "domain": [("origin", "ilike", "%sale%"), 
+                               ("id", ">", max_id_move)],
+                    "fields_names": ["id", 
+                                     "product", 
+                                     "effective_date", 
+                                     "origin", 
+                                     "quantity"],
                     "limit": 5000,
                     "order": [('id', 'ASC')],
                     "context": {"company": 1, "user": 1}
@@ -44,9 +48,16 @@ class StockMoveEtl():
         table_name = "stock_move_ia"
         update_date = datetime.now()
         try:
-            df_stock_move.to_sql(name=table_name, con=self.engine, if_exists='append', index=False)
-            update_date_df = pd.DataFrame({'last_update_date': [update_date]}, index=[0])
-            update_date_df.to_sql(name='last_update_stock_move', con=self.engine, if_exists='append', index=False)
+            df_stock_move.to_sql(name=table_name, 
+                                 con=self.engine, 
+                                 if_exists='append',
+                                 index=False)
+            update_date_df = pd.DataFrame({'last_update_date': [update_date]}, 
+                                            index=[0])
+            update_date_df.to_sql(name='last_update_stock_move', 
+                                  con=self.engine, 
+                                  if_exists='append', 
+                                  index=False)
             print("Datos cargados exitosamente en las tablas")
         except Exception as e:
             print(f"Error al cargar datos en PostgreSQL: {e}")
@@ -58,5 +69,6 @@ class StockMoveEtl():
                 transformed_data = self.transform_data(data)
                 self.load_data(transformed_data)
         finally:
-            db.close_connection(self.engine, self.conn)
+            db.close_connection(self.engine, 
+                                self.conn)
     
