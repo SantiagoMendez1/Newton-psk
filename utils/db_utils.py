@@ -1,9 +1,12 @@
 from sqlalchemy import create_engine, text
 from sqlalchemy.exc import OperationalError
+import tools
 
 
 def connect_to_database(database_name):
-    URL_DATABASE = f'postgresql://santiago:santiago@localhost:5432/{database_name}'
+    config = tools.load_config()
+    url_postgres = config.get('URL_DATABASE')
+    URL_DATABASE = f'{url_postgres}/{database_name}'
     try:
         engine = create_engine(URL_DATABASE, 
                                isolation_level="AUTOCOMMIT")
@@ -47,7 +50,6 @@ def execute_query(conn, query):
         if conn is None:
             return
         result = conn.execute(text(query))
-        print(f"Query ejecutada correctamente")
         return result
     except Exception as e:
         print(f"Error al ejecutar query en base de datos: {e}")

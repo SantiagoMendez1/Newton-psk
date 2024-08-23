@@ -1,4 +1,12 @@
-databases:
-  - name: "TODOREP2"
+URL_DATABASE: 'postgresql://santiago:santiago@localhost:5432'
+URL_API: 'http://127.0.0.1:8010/TODOREPUESTOS/search'
+
+DATABASES:
+  - name: "HOTELTERR"
     models: 
-      - "stock_move_ia"
+      - "hotel_ia"
+
+  - name: "DATABASENAME"
+    models: 
+      - "other_model"
+      
