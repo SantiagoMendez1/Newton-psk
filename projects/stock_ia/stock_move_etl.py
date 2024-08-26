@@ -25,7 +25,6 @@ class StockMoveEtl(ETLPipeline):
             "domain": [("origin", "ilike", "%sale%"), 
                        ("id", ">", max_id_move)],
             "fields_names": ["id", "product", "effective_date", "origin", "quantity"],
-            "limit": 100000,
             "order": [('id', 'ASC')],
             "context": {"company": 1, "user": 25}
         }
