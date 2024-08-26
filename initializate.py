@@ -6,7 +6,8 @@ query_product_str = """
         id SERIAL PRIMARY KEY,
         id_product INTEGER NOT NULL UNIQUE,
         name VARCHAR(255) NOT NULL,
-        hyperparams JSONB
+        hyperparams JSONB,
+        last_train_date TIMESTAMP 
     )
 """
 
@@ -18,7 +19,7 @@ query_last_update_stock_str = """
 """
 
 query_stock_str = """
-    CREATE TABLE IF NOT EXISTS stock_move_ia (
+    CREATE TABLE IF NOT EXISTS stock_move (
         id SERIAL PRIMARY KEY,
         id_move INTEGER NOT NULL UNIQUE,
         product VARCHAR(255) NOT NULL,
@@ -27,6 +28,7 @@ query_stock_str = """
         quantity INTEGER NOT NULL
     )
 """
+# ------------------------- HOTEL TABLES ---------------------------------
 
 query_occupancy_str = """
     CREATE TABLE IF NOT EXISTS occupancy_history (
@@ -64,7 +66,6 @@ model_tables = {
         'query_last_update_occupancy': query_last_occupancy_history_str
     }
 }
-
 
 def main():
     config = tools.load_config()

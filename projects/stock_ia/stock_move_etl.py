@@ -12,7 +12,7 @@ class StockMoveEtl(ETLPipeline):
         config = tools.load_config()
         URL_API = config.get('URL_API')
         try:
-            query = "SELECT MAX(id_move) FROM stock_move_ia"
+            query = "SELECT MAX(id_move) FROM stock_move"
             result = db.execute_query(self.conn, query)
             max_id_move = result.fetchone()[0]
             if max_id_move is None:
@@ -25,9 +25,9 @@ class StockMoveEtl(ETLPipeline):
             "domain": [("origin", "ilike", "%sale%"), 
                        ("id", ">", max_id_move)],
             "fields_names": ["id", "product", "effective_date", "origin", "quantity"],
-            "limit": 10000,
+            "limit": 100000,
             "order": [('id', 'ASC')],
-            "context": {"company": 1, "user": 1}
+            "context": {"company": 1, "user": 25}
         }
         return api_utils.request_post_data(URL_API, payload)
 
@@ -41,7 +41,7 @@ class StockMoveEtl(ETLPipeline):
         return df_stock_move
 
     def load_data(self, df_stock_move):
-        table_name = "stock_move_ia"
+        table_name = "stock_move"
         update_date = datetime.now()
         try:
             df_stock_move.to_sql(name=table_name, 
